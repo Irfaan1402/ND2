@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\ContactsController;
+use App\Http\Controllers\MembersController;
+use App\Http\Controllers\MeetingsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ImagesController;
 use App\Http\Controllers\OrganizationsController;
@@ -35,8 +36,8 @@ Route::delete('logout', [AuthenticatedSessionController::class, 'destroy'])
 
 // Dashboard
 
-Route::get('/', [DashboardController::class, 'index'])
-    ->name('dashboard')
+Route::get('/', [MeetingsCOntroller::class, 'index'])
+    ->name('meetings')
     ->middleware('auth');
 
 // Users
@@ -99,34 +100,51 @@ Route::put('organizations/{organization}/restore', [OrganizationsController::cla
     ->name('organizations.restore')
     ->middleware('auth');
 
-// Contacts
+// members
 
-Route::get('contacts', [ContactsController::class, 'index'])
-    ->name('contacts')
+Route::get('members', [MembersController::class, 'index'])
+    ->name('members')
     ->middleware('auth');
 
-Route::get('contacts/create', [ContactsController::class, 'create'])
-    ->name('contacts.create')
+Route::get('members/create', [MembersController::class, 'create'])
+    ->name('members.create')
     ->middleware('auth');
 
-Route::post('contacts', [ContactsController::class, 'store'])
-    ->name('contacts.store')
+Route::post('members', [MembersController::class, 'store'])
+    ->name('members.store')
     ->middleware('auth');
 
-Route::get('contacts/{contact}/edit', [ContactsController::class, 'edit'])
-    ->name('contacts.edit')
+Route::get('members/{member}/edit', [MembersController::class, 'edit'])
+    ->name('members.edit')
     ->middleware('auth');
 
-Route::put('contacts/{contact}', [ContactsController::class, 'update'])
-    ->name('contacts.update')
+Route::put('members/{member}', [MembersController::class, 'update'])
+    ->name('members.update')
     ->middleware('auth');
 
-Route::delete('contacts/{contact}', [ContactsController::class, 'destroy'])
-    ->name('contacts.destroy')
+Route::delete('members/{member}', [MembersController::class, 'destroy'])
+    ->name('members.destroy')
     ->middleware('auth');
 
-Route::put('contacts/{contact}/restore', [ContactsController::class, 'restore'])
-    ->name('contacts.restore')
+Route::put('members/{member}/restore', [MembersController::class, 'restore'])
+    ->name('members.restore')
+    ->middleware('auth');
+
+// Meetings
+Route::get('meetings', [MeetingsController::class, 'index'])
+    ->name('meetings')
+    ->middleware('auth');
+
+Route::get('meetings/create', [MeetingsController::class, 'create'])
+    ->name('meetings.create')
+    ->middleware('auth');
+
+Route::post('meetings', [MeetingsController::class, 'store'])
+    ->name('meetings.store')
+    ->middleware('auth');
+
+Route::get('meetings/{meeting}/edit', [MeetingsController::class, 'edit'])
+    ->name('meetings.edit')
     ->middleware('auth');
 
 // Reports
@@ -140,3 +158,11 @@ Route::get('reports', [ReportsController::class, 'index'])
 Route::get('/img/{path}', [ImagesController::class, 'show'])
     ->where('path', '.*')
     ->name('image');
+
+Route::get('attendance/{meeting}', [MeetingsController::class, 'attendance'])
+    ->name('attendance')
+    ->middleware('auth');
+
+Route::post('/addToMeeting', [MeetingsController::class, 'addToMeeting'])
+    ->name('addToMeeting')
+    ->middleware('auth');
