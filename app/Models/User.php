@@ -1,4 +1,3 @@
-
 <?php
 
 namespace App\Models;
@@ -54,9 +53,9 @@ class User extends Authenticatable
         return $this->where($field ?? 'id', $value)->withTrashed()->firstOrFail();
     }
 
-    public function office(): BelongsTo
+    public function account(): BelongsTo
     {
-        return $this->belongsTo(Office::class);
+        return $this->belongsTo(Account::class);
     }
 
     public function getNameAttribute()
