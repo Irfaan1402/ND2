@@ -53,9 +53,9 @@ class User extends Authenticatable
         return $this->where($field ?? 'id', $value)->withTrashed()->firstOrFail();
     }
 
-    public function account(): BelongsTo
+    public function office(): BelongsTo
     {
-        return $this->belongsTo(Account::class);
+        return $this->belongsTo(Office::class);
     }
 
     public function getNameAttribute()
