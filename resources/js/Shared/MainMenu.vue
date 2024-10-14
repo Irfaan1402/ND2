@@ -1,29 +1,32 @@
 <template>
   <div>
     <div class="mb-4">
-      <Link class="group flex items-center py-3" href="/">
-        <icon name="dashboard" class="mr-2 w-4 h-4" :class="isUrl('') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
-        <div :class="isUrl('') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Dashboard</div>
+      <Link class="d-flex align-items-center py-3 text-decoration-none" href="/meetings">
+        <i class="fa fa-home fa-lg me-2" :class="isUrl('') ? 'text-white' : 'text-secondary'"></i>
+        <div :class="isUrl('') ? 'text-white' : 'text-secondary'">Meetings</div>
       </Link>
     </div>
     <div class="mb-4">
-      <Link class="group flex items-center py-3" href="/organizations">
-        <icon name="office" class="mr-2 w-4 h-4" :class="isUrl('organizations') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
-        <div :class="isUrl('organizations') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Organizations</div>
+      <Link class="d-flex align-items-center py-3 text-decoration-none" href="/members">
+        <i class="fa fa-users fa-lg me-2" :class="isUrl('organizations') ? 'text-white' : 'text-secondary'"></i>
+        <div :class="isUrl('members') ? 'text-white' : 'text-secondary'">Members</div>
+      </Link>
+    </div>
+    <!-- Uncomment the sections below and update as needed -->
+    <!--
+    <div class="mb-4">
+      <Link class="d-flex align-items-center py-3 text-decoration-none" href="/members">
+        <i class="fa fa-address-book fa-lg me-2" :class="isUrl('members') ? 'text-white' : 'text-secondary'"></i>
+        <div :class="isUrl('members') ? 'text-white' : 'text-secondary'">members</div>
       </Link>
     </div>
     <div class="mb-4">
-      <Link class="group flex items-center py-3" href="/contacts">
-        <icon name="users" class="mr-2 w-4 h-4" :class="isUrl('contacts') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
-        <div :class="isUrl('contacts') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Contacts</div>
+      <Link class="d-flex align-items-center py-3 text-decoration-none" href="/reports">
+        <i class="fa fa-print fa-lg me-2" :class="isUrl('reports') ? 'text-white' : 'text-secondary'"></i>
+        <div :class="isUrl('reports') ? 'text-white' : 'text-secondary'">Reports</div>
       </Link>
     </div>
-    <div class="mb-4">
-      <Link class="group flex items-center py-3" href="/reports">
-        <icon name="printer" class="mr-2 w-4 h-4" :class="isUrl('reports') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
-        <div :class="isUrl('reports') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Reports</div>
-      </Link>
-    </div>
+    -->
   </div>
 </template>
 

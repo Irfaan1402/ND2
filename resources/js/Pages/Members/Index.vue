@@ -51,7 +51,7 @@
               {{ contact.constituency }}
             </span>
           </td>
-
+          
           <td class="w-px border-t">
             <Link class="flex items-center px-4" :href="`/members/${contact.id}/edit`" tabindex="-1">
               <icon name="cheveron-right" class="block w-6 h-6 fill-gray-400" />

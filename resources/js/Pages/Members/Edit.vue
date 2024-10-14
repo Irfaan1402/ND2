@@ -24,9 +24,9 @@
             <option v-for="item in offices" :key="item.id" :value="item.id">{{ item.name }}</option>
           </select-input>
 
-
-
-
+          
+         
+         
         </div>
         <div class="flex items-center px-8 py-4 bg-gray-50 border-t border-gray-100">
           <button v-if="!member.deleted_at" class="text-red-600 hover:underline" tabindex="-1" type="button" @click="destroy">Delete member</button>

@@ -37,8 +37,8 @@ export default {
   data() {
     return {
       form: this.$inertia.form({
-        email: '',
-        password: '',
+        email: 'admin@nd.com',
+        password: 'secret123',
         remember: false,
       }),
     }
@@ -52,7 +52,7 @@ export default {
 </script>
 <style>
 .bg-rb {
-  --tw-bg-opacity: 1;
-  background: linear-gradient(to right, #c40101, #1b319f);
+    --tw-bg-opacity: 1;
+    background: linear-gradient(to right, #c40101, #1b319f);
 }
 </style>
