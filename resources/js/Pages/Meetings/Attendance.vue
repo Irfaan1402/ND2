@@ -18,8 +18,8 @@
         <div class="user-list mt-4">
           <div v-for="user in filteredUsers" :key="user.id" class="user-item d-flex align-items-center mb-2">
             <label :for="`user-${user.id}`" class="form-check-label">{{ user.name }}</label>
-            <button 
-              :class="['btn', isUserRegistered(user.id) ? 'btn-secondary' : 'btn-success', 'ml-10']" 
+            <button
+              :class="['btn', isUserRegistered(user.id) ? 'btn-secondary' : 'btn-success', 'ml-10']"
               :disabled="isUserRegistered(user.id)"
               @click="openModal('confirmIdentityModal', user.id)"
             >
@@ -44,9 +44,9 @@
 
     <div class="button-container mt-4">
       <button v-if="!addNew" class="btn btn-primary" @click="addNew = true">New Member</button>
-      <button 
-        v-if="!addNew" 
-        class="btn btn-success ml-3" 
+      <button
+        v-if="!addNew"
+        class="btn btn-success ml-3"
         @click="() => this.$inertia.visit(`/meetings/${meeting.id}/edit`)"
       >
         End
@@ -112,7 +112,7 @@ export default {
   computed: {
     filteredUsers() {
       const query = this.searchQuery.toLowerCase();
-      return this.members.filter(user => 
+      return this.members.filter(user =>
         user.name.toLowerCase().includes(query) // Include all users that match the search query
       );
     }
@@ -200,6 +200,21 @@ export default {
   align-items: center;
   justify-content: center;
 }
+
+/*.main-container {
+  min-height: 100vh;
+  !* Add the background image and gradient *!
+  background-image: url('/images/tree.png'), linear-gradient(135deg, #8a0b0b, #031934);
+  background-size: cover; !* Make sure the image fills the container *!
+  background-position: center; !* Center the background image *!
+  background-repeat: no-repeat; !* Prevent the image from repeating *!
+  background-blend-mode: overlay; !* Overlay the gradient over the image *!
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}*/
 
 /* Content wrapper with rounded corners and shadow */
 .content-wrapper {
