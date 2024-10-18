@@ -4,7 +4,7 @@
     <h1 class="mb-8 text-3xl font-bold">
       {{ form.title }}  <i class="fa fa-lg me-2" :class="showDetails ? 'fa-chevron-up' : 'fa-chevron-down'" @click="showDetails = !showDetails" ></i>
     </h1>
-    <div v-if="showDetails" class="bg-white rounded-md shadow overflow-hidden col-sm-12">
+    <div v-if="showDetails" class="bg-white rounded-md shadow overflow-hidden col-sm-12 padding-reset">
       <form @submit.prevent="update">
         <div class="flex flex-wrap -mb-8 -mr-6 p-8">
           <text-input v-model="form.title" :error="form.errors.title" class="pb-8 pr-6 w-full lg:w-1/2" label="Title" />
@@ -13,17 +13,18 @@
             <option v-for="item in offices" :value="item.id">{{item.name}}</option>
           </select-input>
           <date-input v-model="form.date" :error="form.errors.date" class="pb-8 pr-6 w-full lg:w-1/2" type="date" label="Date" />
-          <file-input v-model="form.attachment_path" :error="form.errors.attachment_path" class="pb-8 pr-6 w-full lg:w-1/2" label="Attachment" />
+<!--          <file-input v-model="form.attachment_path" :error="form.errors.attachment_path" class="pb-8 pr-6 w-full lg:w-1/2" label="Attachment" />-->
           <textarea-input v-model="form.topic" :error="form.errors.topic" class="pb-8 pr-6 w-full lg:w-1/2" label="Topic" />
         </div>
         <div class="flex items-center px-8 py-4 bg-gray-50 border-t border-gray-100">
+          <button v-if="!meeting.deleted_at" class="text-red-600 hover:underline" tabindex="-1" type="button" @click="destroy">Delete meeting</button>
           <loading-button :loading="form.processing" class="btn-indigo ml-auto" type="submit">Update meeting</loading-button>
         </div>
       </form>
     </div>
   </div>
   <h1 class="mb-8 text-3xl font-bold mt-10">
-      Participants <a :href="`/attendance/${meeting.id}`"><i class="fa fa-plus-circle fa-lg me-2"></i></a>
+      Participants ({{members.data.length}}) <a :href="`/attendance/${meeting.id}`"><i class="fa fa-plus-circle fa-lg me-2"></i></a>
   </h1>
   <div class="bg-white rounded-md shadow overflow-x-auto">
       <table class="w-full whitespace-nowrap">
@@ -61,7 +62,7 @@
               {{ contact.constituency }}
             </span>
           </td>
-          
+
           <td class="w-px border-t">
             <Link class="flex items-center px-4" :href="`/members/${contact.id}/edit`" tabindex="-1">
               <icon name="cheveron-right" class="block w-6 h-6 fill-gray-400" />

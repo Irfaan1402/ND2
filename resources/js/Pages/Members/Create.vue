@@ -57,11 +57,11 @@ export default {
       form: this.$inertia.form({
         first_name: '',
         last_name: '',
-        constituency: null,
+        constituency: 15,
         email: '',
         phone: '',
         locality: '',
-        office_id: '',
+        office_id: 1,
       }),
     }
   },

@@ -51,13 +51,13 @@ class MembersController extends Controller
 
         // Use Validator facade to validate the data
         $validator = Validator::make($data, [
-            'first_name' => ['required', 'max:50'],
-            'last_name' => ['required', 'max:50'],
+            'first_name' => ['nullable', 'max:50'],
+            'last_name' => ['nullable', 'max:50'],
             'office_id' => ['required', 'exists:offices,id'],
             'email' => ['nullable', 'max:50', 'email'],
             'phone' => ['nullable', 'max:50'],
             'locality' => ['nullable', 'max:150'],
-            'constituency' => ['required', 'max:50'],
+            'constituency' => ['nullable', 'max:50'],
         ]);
 
         // Check if validation fails

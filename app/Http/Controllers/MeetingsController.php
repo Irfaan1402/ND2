@@ -101,35 +101,33 @@ class MeetingsController extends Controller
         ]);
     }
 
-    public function update(Member $member): RedirectResponse
+    public function update(Meeting $meeting): RedirectResponse
     {
-        $member->update(
+        $meeting->update(
             Request::validate([
-                'first_name' => ['required', 'max:50'],
-                'last_name' => ['required', 'max:50'],
+                'title' => ['required', 'max:50'],
+                'attachment_path' => ['nullable', 'max:50'],
                 'office_id' => ['required', 'exists:offices,id'],
-                'email' => ['nullable', 'max:50', 'email'],
-                'phone' => ['nullable', 'max:50'],
-                'locality' => ['nullable', 'max:150'],
-                'constituency' => ['required', 'max:50'],
+                'topic' => ['nullable', 'max:50'],
+                'date' => ['nullable', 'max:50'],
             ])
         );
 
-        return Redirect::back()->with('success', 'Member updated.');
+        return Redirect::back()->with('success', 'Meeting updated.');
     }
 
-    public function destroy(Member $member): RedirectResponse
+    public function destroy(Meeting $meeting): RedirectResponse
     {
-        $member->delete();
+        $meeting->delete();
 
-        return Redirect::route('members')->with('success', 'Member deleted.');
+        return Redirect::route('meetings')->with('success', 'Meeting deleted.');
     }
 
-    public function restore(Contact $contact): RedirectResponse
+    public function restore(Meeting $meeting): RedirectResponse
     {
-        $contact->restore();
+        $meeting->restore();
 
-        return Redirect::back()->with('success', 'Contact restored.');
+        return Redirect::back()->with('success', 'Meeting restored.');
     }
 
     public function attendance(Meeting $meeting): Response

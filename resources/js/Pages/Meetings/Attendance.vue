@@ -37,7 +37,7 @@
           <input type="text" v-model="form.locality" class="form-control form-control-lg mb-3" placeholder="Locality" />
           <input type="text" v-model="form.phone" class="form-control form-control-lg mb-3" placeholder="Phone" />
           <input type="text" v-model="form.constituency" class="form-control form-control-lg mb-3" placeholder="Constituency" />
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <loading-button :loading="processing" class="btn-indigo" type="submit">Save</loading-button>
         </form>
       </template>
     </div>
@@ -64,7 +64,7 @@
     </div>
   </div>
 
-  <modal :modal-id="'confirmIdentityModal'" :title="'Confirm Identity'" :submit-form="addToMeeting" :cancel="'No'" :confirm="'Yes'">
+  <modal :modal-id="'confirmIdentityModal'" :title="'Confirm Identity'" :submit-form="addToMeeting" :cancel="'No'" :confirm="'Yes'" :processing="processing">
     <p><b>Name</b> : {{ selectedMember.name }}</p>
     <p><b>Email</b> : {{ selectedMember.email }}</p>
     <p><b>Locality</b> : {{ selectedMember.locality }}</p>
@@ -74,10 +74,11 @@
 <script>
 import Modal from '@/Shared/Modal.vue';
 import axios from 'axios';
-
+import LoadingButton from '@/Shared/LoadingButton.vue'
 export default {
   components: {
     Modal,
+    LoadingButton
   },
   props: {
     meeting: Object, // Assuming meeting is a single object
@@ -93,6 +94,7 @@ export default {
   data() {
     return {
       searchQuery: '',
+      processing: false,
       addNew: false,
       form: this.$inertia.form({
         id: null,
@@ -102,6 +104,7 @@ export default {
         phone: null,
         locality: null,
         constituency: null,
+        office_id: this.meeting.office_id,
       }),
       selectedMembers: [],
       selectedMember: {},
@@ -119,6 +122,7 @@ export default {
   },
   methods: {
     async addToMeeting() {
+      this.processing = true;
       const data = {
         memberId: this.form.id,
         memberFirstName: this.form.first_name,
@@ -155,6 +159,8 @@ export default {
         // Display the toast with the success message
         this.toastMessage = response.data.message; // Set the toast message
         this.showToast = true; // Show the toast
+        this.processing = false;
+        this.searchQuery = '';
         setTimeout(() => {
           this.showToast = false; // Hide the toast after 3 seconds
         }, 3000);

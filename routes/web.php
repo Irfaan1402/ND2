@@ -147,6 +147,14 @@ Route::get('meetings/{meeting}/edit', [MeetingsController::class, 'edit'])
     ->name('meetings.edit')
     ->middleware('auth');
 
+Route::put('meetings/{meeting}', [MeetingsController::class, 'update'])
+    ->name('meetings.update')
+    ->middleware('auth');
+
+Route::delete('meetings/{meeting}', [MeetingsController::class, 'destroy'])
+    ->name('meetings.destroy')
+    ->middleware('auth');
+
 // Reports
 
 Route::get('reports', [ReportsController::class, 'index'])

@@ -2,13 +2,13 @@
   <div>
     <div class="mb-4">
       <Link class="d-flex align-items-center py-3 text-decoration-none" href="/meetings">
-        <i class="fa fa-home fa-lg me-2" :class="isUrl('') ? 'text-white' : 'text-secondary'"></i>
-        <div :class="isUrl('') ? 'text-white' : 'text-secondary'">Meetings</div>
+        <i class="fa fa-home fa-lg me-2" :class="isUrl('meetings') ? 'text-white' : 'text-secondary'"></i>
+        <div :class="isUrl('meetings') ? 'text-white' : 'text-secondary'">Meetings</div>
       </Link>
     </div>
     <div class="mb-4">
       <Link class="d-flex align-items-center py-3 text-decoration-none" href="/members">
-        <i class="fa fa-users fa-lg me-2" :class="isUrl('organizations') ? 'text-white' : 'text-secondary'"></i>
+        <i class="fa fa-users fa-lg me-2" :class="isUrl('members') ? 'text-white' : 'text-secondary'"></i>
         <div :class="isUrl('members') ? 'text-white' : 'text-secondary'">Members</div>
       </Link>
     </div>

@@ -14,7 +14,7 @@
             <option v-for="item in offices" :value="item.id">{{item.name}}</option>
           </select-input>
           <date-input v-model="form.date" :error="form.errors.date" class="pb-8 pr-6 w-full lg:w-1/2" type="date" label="Date" />
-          <file-input v-model="form.attachment_path" :error="form.errors.attachment_path" class="pb-8 pr-6 w-full lg:w-1/2" label="Attachment" />
+<!--          <file-input v-model="form.attachment_path" :error="form.errors.attachment_path" class="pb-8 pr-6 w-full lg:w-1/2" label="Attachment" />-->
           <textarea-input v-model="form.topic" :error="form.errors.topic" class="pb-8 pr-6 w-full lg:w-1/2" label="Topic" />
         </div>
         <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
