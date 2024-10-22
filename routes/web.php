@@ -9,6 +9,7 @@ use App\Http\Controllers\OrganizationsController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -174,3 +175,16 @@ Route::get('attendance/{meeting}', [MeetingsController::class, 'attendance'])
 Route::post('/addToMeeting', [MeetingsController::class, 'addToMeeting'])
     ->name('addToMeeting')
     ->middleware('auth');
+
+
+// Meetings
+Route::get('posts', [PostsController::class, 'index'])
+    ->name('posts')
+    ->middleware('auth');
+
+Route::get('posts/create', [PostsController::class, 'create'])
+    ->name('posts.create')
+    ->middleware('auth');
+
+Route::post('posts', [PostsController::class, 'store'])
+    ->name('posts.store');
