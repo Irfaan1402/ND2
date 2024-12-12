@@ -34,7 +34,7 @@
           <input type="text" v-model="form.first_name" class="form-control form-control-lg mb-3" placeholder="First Name" />
           <input type="text" v-model="form.last_name" class="form-control form-control-lg mb-3" placeholder="Last Name" />
           <input type="text" v-model="form.email" class="form-control form-control-lg mb-3" placeholder="Email" />
-          <input type="text" v-model="form.locality" class="form-control form-control-lg mb-3" placeholder="Locality" />
+          <input type="text" v-model="form.address" class="form-control form-control-lg mb-3" placeholder="Address" />
           <input type="text" v-model="form.phone" class="form-control form-control-lg mb-3" placeholder="Phone" />
           <input type="text" v-model="form.constituency" class="form-control form-control-lg mb-3" placeholder="Constituency" />
           <loading-button :loading="processing" class="btn-indigo" type="submit">Save</loading-button>
@@ -67,7 +67,7 @@
   <modal :modal-id="'confirmIdentityModal'" :title="'Confirm Identity'" :submit-form="addToMeeting" :cancel="'No'" :confirm="'Yes'" :processing="processing">
     <p><b>Name</b> : {{ selectedMember.name }}</p>
     <p><b>Email</b> : {{ selectedMember.email }}</p>
-    <p><b>Locality</b> : {{ selectedMember.locality }}</p>
+    <p><b>Address</b> : {{ selectedMember.address }}</p>
   </modal>
 </template>
 
@@ -102,7 +102,7 @@ export default {
         last_name: null,
         email: null,
         phone: null,
-        locality: null,
+        address: null,
         constituency: null,
         office_id: this.meeting.office_id,
       }),
@@ -129,7 +129,7 @@ export default {
         memberLastName: this.form.last_name,
         memberEmail: this.form.email,
         memberPhone: this.form.phone,
-        memberLocality: this.form.locality,
+        memberAddress: this.form.address,
         memberConstituency: this.form.constituency,
         meetingId: this.meeting.id,
       };
@@ -145,7 +145,7 @@ export default {
           id: this.form.id,
           name: this.form.first_name + ' ' + this.form.last_name,
           email: this.form.email,
-          locality: this.form.locality,
+          address: this.form.address,
         });
 
         // Update participants array locally
@@ -153,7 +153,7 @@ export default {
           id: this.form.id,
           name: this.form.first_name + ' ' + this.form.last_name,
           email: this.form.email,
-          locality: this.form.locality,
+          address: this.form.address,
         });
 
         // Display the toast with the success message

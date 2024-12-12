@@ -173,7 +173,7 @@ class MeetingsController extends Controller
             'memberLastName' => 'nullable|string|max:255',
             'memberEmail' => 'nullable|email|max:255',
             'memberPhone' => 'nullable|string|max:20',
-            'memberLocality' => 'nullable|string|max:255',
+            'memberAddress' => 'nullable|string|max:255',
             'memberConstituency' => 'nullable|string|max:255',
             'meetingId' => 'nullable|integer',
         ]);
@@ -184,7 +184,7 @@ class MeetingsController extends Controller
         $memberLastName = $validatedData['memberLastName'];
         $memberEmail = $validatedData['memberEmail'];
         $memberPhone = $validatedData['memberPhone'];
-        $memberLocality = $validatedData['memberLocality'];
+        $memberAddress = $validatedData['memberAddress'];
         $memberConstituency = $validatedData['memberConstituency'];
         $meetingId = $validatedData['meetingId'];
 
@@ -196,7 +196,7 @@ class MeetingsController extends Controller
             $member->last_name = $memberLastName;
             $member->email = $memberEmail;
             $member->phone = $memberPhone;
-            $member->locality = $memberLocality;
+            $member->address = $memberAddress;
             $member->constituency = $memberConstituency;
             $member->office_id = 1;
             $member->save();

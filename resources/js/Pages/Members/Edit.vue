@@ -18,15 +18,15 @@
             <option :value="null" />
             <option v-for="constituency in constituencies" :value="constituency">{{constituency}}</option>
           </select-input>
-          <text-input v-model="form.locality" :error="form.errors.locality" class="pb-8 pr-6 w-full lg:w-1/2" label="Locality" />
+          <text-input v-model="form.address" :error="form.errors.locality" class="pb-8 pr-6 w-full lg:w-1/2" label="Address" />
           <select-input v-model="form.office_id" :error="form.errors.office_id" class="pb-8 pr-6 w-full lg:w-1/2" label="Office">
             <option :value="null" />
             <option v-for="item in offices" :key="item.id" :value="item.id">{{ item.name }}</option>
           </select-input>
 
-          
-         
-         
+
+
+
         </div>
         <div class="flex items-center px-8 py-4 bg-gray-50 border-t border-gray-100">
           <button v-if="!member.deleted_at" class="text-red-600 hover:underline" tabindex="-1" type="button" @click="destroy">Delete member</button>
@@ -68,7 +68,7 @@ export default {
         office_id: this.member.office_id,
         email: this.member.email,
         phone: this.member.phone,
-        locality: this.member.locality,
+        address: this.member.address,
         constituency: this.member.constituency,
       }),
     }

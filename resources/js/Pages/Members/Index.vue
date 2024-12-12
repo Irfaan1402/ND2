@@ -21,7 +21,7 @@
           <th class="pb-4 pt-6 px-6">Name</th>
           <th class="pb-4 pt-6 px-6">Email</th>
           <th class="pb-4 pt-6 px-6">Phone</th>
-          <th class="pb-4 pt-6 px-6">Locality</th>
+          <th class="pb-4 pt-6 px-6">Address</th>
           <th class="pb-4 pt-6 px-6">Constituency</th>
         </tr>
         <tr v-for="contact in members.data" :key="contact.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
@@ -43,7 +43,7 @@
           </td>
           <td class="border-t">
             <span class="flex items-center px-6 py-4">
-              {{ contact.locality }}
+              {{ contact.address }}
             </span>
           </td>
           <td class="border-t">
@@ -51,7 +51,7 @@
               {{ contact.constituency }}
             </span>
           </td>
-          
+
           <td class="w-px border-t">
             <Link class="flex items-center px-4" :href="`/members/${contact.id}/edit`" tabindex="-1">
               <icon name="cheveron-right" class="block w-6 h-6 fill-gray-400" />

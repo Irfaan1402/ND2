@@ -29,7 +29,7 @@ class MembersController extends Controller
                     'id' => $member->id,
                     'name' => $member->name,
                     'phone' => $member->phone,
-                    'locality' => $member->locality,
+                    'address' => $member->address,
                     'deleted_at' => $member->deleted_at,
                     'email' => $member->email,
                     'constituency' => $member->constituency,
@@ -56,7 +56,7 @@ class MembersController extends Controller
             'office_id' => ['required', 'exists:offices,id'],
             'email' => ['nullable', 'max:50', 'email'],
             'phone' => ['nullable', 'max:50'],
-            'locality' => ['nullable', 'max:150'],
+            'address' => ['nullable', 'max:250'],
             'constituency' => ['nullable', 'max:50'],
         ]);
 
@@ -83,7 +83,7 @@ class MembersController extends Controller
                 'email' => $member->email,
                 'phone' => $member->phone,
                 'constituency' => $member->constituency,
-                'locality' => $member->locality,
+                'address' => $member->address,
             ],
             'offices' => Office::all(),
         ]);
@@ -98,7 +98,7 @@ class MembersController extends Controller
                 'office_id' => ['required', 'exists:offices,id'],
                 'email' => ['nullable', 'max:50', 'email'],
                 'phone' => ['nullable', 'max:50'],
-                'locality' => ['nullable', 'max:150'],
+                'address' => ['nullable', 'max:250'],
                 'constituency' => ['required', 'max:50'],
             ])
         );

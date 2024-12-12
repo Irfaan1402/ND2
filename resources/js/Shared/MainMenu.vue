@@ -12,12 +12,12 @@
         <div :class="isUrl('members') ? 'text-white' : 'text-secondary'">Members</div>
       </Link>
     </div>
-    <div class="mb-4">
+<!--    <div class="mb-4">
       <Link class="d-flex align-items-center py-3 text-decoration-none" href="/posts">
         <i class="fa fa-newspaper  fa-lg me-2" :class="isUrl('posts') ? 'text-white' : 'text-secondary'"></i>
         <div :class="isUrl('posts') ? 'text-white' : 'text-secondary'">Posts</div>
       </Link>
-    </div>
+    </div>-->
     <!-- Uncomment the sections below and update as needed -->
     <!--
     <div class="mb-4">

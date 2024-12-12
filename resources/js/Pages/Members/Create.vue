@@ -17,7 +17,7 @@
             <option v-for="constituency in constituencies" :value="constituency">{{constituency}}</option>
           </select-input>
 
-          <text-input v-model="form.locality" :error="form.errors.locality" class="pb-8 pr-6 w-full lg:w-1/2" label="Locality" />
+          <text-input v-model="form.address" :error="form.errors.address" class="pb-8 pr-6 w-full lg:w-1/2" label="Address" />
           <select-input v-model="form.office_id" :error="form.errors.office_id" class="pb-8 pr-6 w-full lg:w-1/2" label="Office">
             <option :value="null" />
             <option v-for="item in offices" :value="item.id">{{item.name}}</option>
@@ -60,7 +60,7 @@ export default {
         constituency: 15,
         email: '',
         phone: '',
-        locality: '',
+        address: '',
         office_id: 1,
       }),
     }
