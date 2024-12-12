@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MeetingHasMember;
 use App\Models\Member;
 use App\Models\Office;
 use App\Models\User;
@@ -86,6 +87,21 @@ class MembersController extends Controller
                 'address' => $member->address,
             ],
             'offices' => Office::all(),
+            'filters' => Request::all('search', 'date', 'office_id'),
+            'meetings' => Auth::user()->office->meetings()->orderByDate()
+                ->filter(Request::only('search', 'date', 'office_id'))
+                ->paginate(10)
+                ->withQueryString()
+                ->through(fn ($meeting) => [
+                    'id' => $meeting->id,
+                    'title' => $meeting->title,
+                    'office_id' => $meeting->office_id,
+                    'office' => $meeting->office->name,
+                    'date' => $meeting->date,
+                    'topic' => $meeting->topic,
+                    'attachement' => $meeting->attachement_path,
+                ]),
+            'userMeetings' => MeetingHasMember::where('member_id', $member->id)->pluck('meeting_id')->toArray(),
         ]);
     }
 

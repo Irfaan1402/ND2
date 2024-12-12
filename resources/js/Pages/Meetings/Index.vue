@@ -53,7 +53,7 @@
                 {{ item.attachment }}
               </span>
             </td>
-            
+
             <td class="w-px border-t">
               <Link class="flex items-center px-4" :href="`/meetings/${item.id}/edit`" tabindex="-1">
                 <icon name="cheveron-right" class="block w-6 h-6 fill-gray-400" />
@@ -68,7 +68,7 @@
       <pagination class="mt-6" :links="meetings.links" />
     </div>
   </template>
-  
+
   <script>
   import { Head, Link } from '@inertiajs/vue3'
   import Icon from '@/Shared/Icon.vue'
@@ -90,8 +90,8 @@
     },
     layout: Layout,
     props: {
-      filters: Object,
-      meetings: Object,
+      filters: Array,
+      meetings: Array,
       offices: Array,
     },
     data() {
@@ -123,4 +123,3 @@
     },
   }
   </script>
-  
