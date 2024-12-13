@@ -37,9 +37,10 @@ Route::delete('logout', [AuthenticatedSessionController::class, 'destroy'])
 
 // Dashboard
 
-Route::get('/', [MeetingsCOntroller::class, 'index'])
-    ->name('meetings')
-    ->middleware('auth');
+Route::get('/', function () {
+    return redirect('/meetings');
+})->middleware('auth');
+
 
 // Users
 

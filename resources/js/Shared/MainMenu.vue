@@ -1,12 +1,15 @@
 <template>
   <div>
-    <div class="mb-4">
+
+
+    <div v-if="isAdmin" class="mb-4">
       <Link class="d-flex align-items-center py-3 text-decoration-none" href="/meetings">
         <i class="fa fa-home fa-lg me-2" :class="isUrl('meetings') ? 'text-white' : 'text-secondary'"></i>
         <div :class="isUrl('meetings') ? 'text-white' : 'text-secondary'">Meetings</div>
       </Link>
     </div>
-    <div class="mb-4">
+
+    <div v-if="isAdmin" class="mb-4">
       <Link class="d-flex align-items-center py-3 text-decoration-none" href="/members">
         <i class="fa fa-users fa-lg me-2" :class="isUrl('members') ? 'text-white' : 'text-secondary'"></i>
         <div :class="isUrl('members') ? 'text-white' : 'text-secondary'">Members</div>
@@ -44,6 +47,20 @@ export default {
   components: {
     Icon,
     Link,
+  },
+  props: {
+    auth: Object,
+  },
+  data() {
+    return {
+      //
+    }
+  },
+  computed: {
+    isAdmin() {
+      // Check if 'auth.user.roles' contains the 'admin' role
+      return this.auth.user && this.auth.user.roles.includes('admin');
+    },
   },
   methods: {
     isUrl(...urls) {

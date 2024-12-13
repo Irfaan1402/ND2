@@ -20,29 +20,41 @@ class MembersController extends Controller
     public function index(): Response
     {
 
-        return Inertia::render('Members/Index', [
-            'filters' => Request::all('search', 'constituency'),
-            'members' => Auth::user()->office->members()->orderByName()
-                ->filter(Request::only('search', 'constituency'))
-                ->paginate(10)
-                ->withQueryString()
-                ->through(fn ($member) => [
-                    'id' => $member->id,
-                    'name' => $member->name,
-                    'phone' => $member->phone,
-                    'address' => $member->address,
-                    'deleted_at' => $member->deleted_at,
-                    'email' => $member->email,
-                    'constituency' => $member->constituency,
-                ]),
-        ]);
+        if (Auth::user() && Auth::user()->hasRole('admin')) {
+            return Inertia::render('Members/Index', [
+                'filters' => Request::all('search', 'constituency'),
+                'members' => Auth::user()->office->members()->orderByName()
+                    ->filter(Request::only('search', 'constituency'))
+                    ->paginate(10)
+                    ->withQueryString()
+                    ->through(fn ($member) => [
+                        'id' => $member->id,
+                        'name' => $member->name,
+                        'phone' => $member->phone,
+                        'address' => $member->address,
+                        'deleted_at' => $member->deleted_at,
+                        'email' => $member->email,
+                        'constituency' => $member->constituency,
+                    ]),
+            ]);
+        } else {
+            return Inertia::render('Errors/Unauthorized');
+        }
+
+
     }
 
     public function create(): Response
     {
-        return Inertia::render('Members/Create', [
-            'offices' => Office::all(),
-        ]);
+
+        if (Auth::user() && Auth::user()->hasRole('admin')) {
+            return Inertia::render('Members/Create', [
+                'offices' => Office::all(),
+            ]);
+
+        } else {
+            return Inertia::render('Errors/Unauthorized');
+        }
     }
 
     public function store(): RedirectResponse
@@ -75,34 +87,41 @@ class MembersController extends Controller
 
     public function edit(Member $member): Response
     {
-        return Inertia::render('Members/Edit', [
-            'member' => [
-                'id' => $member->id,
-                'first_name' => $member->first_name,
-                'last_name' => $member->last_name,
-                'office_id' => $member->office_id,
-                'email' => $member->email,
-                'phone' => $member->phone,
-                'constituency' => $member->constituency,
-                'address' => $member->address,
-            ],
-            'offices' => Office::all(),
-            'filters' => Request::all('search', 'date', 'office_id'),
-            'meetings' => Auth::user()->office->meetings()->orderByDate()
-                ->filter(Request::only('search', 'date', 'office_id'))
-                ->paginate(10)
-                ->withQueryString()
-                ->through(fn ($meeting) => [
-                    'id' => $meeting->id,
-                    'title' => $meeting->title,
-                    'office_id' => $meeting->office_id,
-                    'office' => $meeting->office->name,
-                    'date' => $meeting->date,
-                    'topic' => $meeting->topic,
-                    'attachement' => $meeting->attachement_path,
-                ]),
-            'userMeetings' => MeetingHasMember::where('member_id', $member->id)->pluck('meeting_id')->toArray(),
-        ]);
+        if (Auth::user() && Auth::user()->hasRole('admin')) {
+            return Inertia::render('Members/Edit', [
+                'member' => [
+                    'id' => $member->id,
+                    'first_name' => $member->first_name,
+                    'last_name' => $member->last_name,
+                    'office_id' => $member->office_id,
+                    'email' => $member->email,
+                    'phone' => $member->phone,
+                    'constituency' => $member->constituency,
+                    'address' => $member->address,
+                ],
+                'offices' => Office::all(),
+                'filters' => Request::all('search', 'date', 'office_id'),
+                'meetings' => Auth::user()->office->meetings()->orderByDate()
+                    ->filter(Request::only('search', 'date', 'office_id'))
+                    ->paginate(10)
+                    ->withQueryString()
+                    ->through(fn ($meeting) => [
+                        'id' => $meeting->id,
+                        'title' => $meeting->title,
+                        'office_id' => $meeting->office_id,
+                        'office' => $meeting->office->name,
+                        'date' => $meeting->date,
+                        'topic' => $meeting->topic,
+                        'attachement' => $meeting->attachement_path,
+                    ]),
+                'userMeetings' => MeetingHasMember::where('member_id', $member->id)->pluck('meeting_id')->toArray(),
+            ]);
+
+        } else {
+            return Inertia::render('Errors/Unauthorized');
+        }
+
+
     }
 
     public function update(Member $member): RedirectResponse

@@ -21,31 +21,39 @@ class MeetingsController extends Controller
 {
     public function index(): Response
     {
+        if (Auth::user() && Auth::user()->hasRole('admin')) {
+            return Inertia::render('Meetings/Index', [
+                'filters' => Request::all('search', 'date', 'office_id'),
+                'offices' => Office::all(),
+                'meetings' => Auth::user()->office->meetings()->orderByDate()
+                    ->filter(Request::only('search', 'date', 'office_id'))
+                    ->paginate(10)
+                    ->withQueryString()
+                    ->through(fn ($meeting) => [
+                        'id' => $meeting->id,
+                        'title' => $meeting->title,
+                        'office_id' => $meeting->office_id,
+                        'office' => $meeting->office->name,
+                        'date' => $meeting->date,
+                        'topic' => $meeting->topic,
+                        'attachement' => $meeting->attachement_path,
+                    ]),
+            ]);
+        } else {
+            return Inertia::render('Errors/Unauthorized');
+        }
 
-        return Inertia::render('Meetings/Index', [
-            'filters' => Request::all('search', 'date', 'office_id'),
-            'offices' => Office::all(),
-            'meetings' => Auth::user()->office->meetings()->orderByDate()
-                ->filter(Request::only('search', 'date', 'office_id'))
-                ->paginate(10)
-                ->withQueryString()
-                ->through(fn ($meeting) => [
-                    'id' => $meeting->id,
-                    'title' => $meeting->title,
-                    'office_id' => $meeting->office_id,
-                    'office' => $meeting->office->name,
-                    'date' => $meeting->date,
-                    'topic' => $meeting->topic,
-                    'attachement' => $meeting->attachement_path,
-                ]),
-        ]);
     }
 
     public function create(): Response
     {
-        return Inertia::render('Meetings/Create', [
-            'offices' => Office::all(),
-        ]);
+        if (Auth::user() && Auth::user()->hasRole('admin')) {
+            return Inertia::render('Meetings/Create', [
+                'offices' => Office::all(),
+            ]);
+        } else {
+            return Inertia::render('Errors/Unauthorized');
+        }
     }
 
     public function store(): RedirectResponse
@@ -87,18 +95,24 @@ class MeetingsController extends Controller
             'email' => $member->email,
             'constituency' => $member->constituency,
         ]);
-        return Inertia::render('Meetings/Edit', [
-            'meeting' => [
-                'id' => $meeting->id,
-                'title' => $meeting->title,
-                'date' => $meeting->date,
-                'office_id' => $meeting->office_id,
-                'topic' => $meeting->topic,
-                'attachment_path' => $meeting->attachment_path,
-            ],
-            'offices' => Office::all(),
-            'members' => $members,
-        ]);
+
+        if (Auth::user() && Auth::user()->hasRole('admin')) {
+            return Inertia::render('Meetings/Edit', [
+                'meeting' => [
+                    'id' => $meeting->id,
+                    'title' => $meeting->title,
+                    'date' => $meeting->date,
+                    'office_id' => $meeting->office_id,
+                    'topic' => $meeting->topic,
+                    'attachment_path' => $meeting->attachment_path,
+                ],
+                'offices' => Office::all(),
+                'members' => $members,
+            ]);
+        } else {
+            return Inertia::render('Errors/Unauthorized');
+        }
+
     }
 
     public function update(Meeting $meeting): RedirectResponse
