@@ -8,6 +8,8 @@ use App\Http\Controllers\ImagesController;
 use App\Http\Controllers\OrganizationsController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\UsersController;
+use App\Models\Meeting;
+use App\Models\Member;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostsController;
 
@@ -38,6 +40,18 @@ Route::delete('logout', [AuthenticatedSessionController::class, 'destroy'])
 // Dashboard
 
 Route::get('/', function () {
+    $members = Member::withCount('meetings')->get();
+    $totalMeetings = Meeting::count();
+
+    foreach ($members as $member) {
+        $attendance = $totalMeetings > 0 ? round($member->meetings_count / $totalMeetings * 100) : 0;
+
+        // Save the attendance to the database (assuming you have an 'attendance' column in the 'members' table)
+        $member->attendance = $attendance;
+        $member->save();
+    }
+
+
     return redirect('/meetings');
 })->middleware('auth');
 

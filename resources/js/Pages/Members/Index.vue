@@ -18,12 +18,27 @@
     <div class="bg-white rounded-md shadow overflow-x-auto">
       <table class="w-full whitespace-nowrap">
         <tr class="text-left font-bold">
-          <th class="pb-4 pt-6 px-6">Name</th>
-          <th class="pb-4 pt-6 px-6">Email</th>
-          <th class="pb-4 pt-6 px-6">Phone</th>
-          <th class="pb-4 pt-6 px-6">Address</th>
-          <th class="pb-4 pt-6 px-6">Constituency</th>
+          <th class="pb-4 pt-6 px-6 cursor-pointer" @click="sortBy('last_name')">
+            Name <i :class="getSortIcon('last_name')" class="ml-2"></i>
+          </th>
+          <th class="pb-4 pt-6 px-6 cursor-pointer" @click="sortBy('email')">
+            Email <i :class="getSortIcon('email')" class="ml-2"></i>
+          </th>
+          <th class="pb-4 pt-6 px-6 cursor-pointer" @click="sortBy('phone')">
+            Phone <i :class="getSortIcon('phone')" class="ml-2"></i>
+          </th>
+          <th class="pb-4 pt-6 px-6 cursor-pointer" @click="sortBy('address')">
+            Address <i :class="getSortIcon('address')" class="ml-2"></i>
+          </th>
+          <th class="pb-4 pt-6 px-6 cursor-pointer" @click="sortBy('constituency')">
+            Constituency <i :class="getSortIcon('constituency')" class="ml-2"></i>
+          </th>
+          <th class="pb-4 pt-6 px-6 cursor-pointer" @click="sortBy('attendance')">
+            Attendance <i :class="getSortIcon('attendance')" class="ml-2"></i>
+          </th>
         </tr>
+
+
         <tr v-for="contact in members.data" :key="contact.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
           <td class="border-t">
             <Link class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/members/${contact.id}/edit`">
@@ -49,6 +64,11 @@
           <td class="border-t">
             <span class="flex items-center px-6 py-4">
               {{ contact.constituency }}
+            </span>
+          </td>
+          <td class="border-t">
+            <span class="flex items-center px-6 py-4">
+              {{ contact.attendance }}%
             </span>
           </td>
 
@@ -96,6 +116,8 @@ export default {
         search: this.filters.search,
         trashed: this.filters.trashed,
         constituency : this.filters.constituency,
+        sort: this.filters.sort || 'name',
+        direction: this.filters.direction || 'asc',
       },
     }
   },
@@ -113,6 +135,21 @@ export default {
     },
   },
   methods: {
+    sortBy(column) {
+      if (this.form.sort === column) {
+        this.form.direction = this.form.direction === 'asc' ? 'desc' : 'asc';
+      } else {
+        this.form.sort = column;
+        this.form.direction = 'asc';
+      }
+      this.$inertia.get('/members', pickBy(this.form), { preserveState: true });
+    },
+    getSortIcon(column) {
+      if (this.form.sort === column) {
+        return this.form.direction === 'asc' ? 'fas fa-arrow-up' : 'fas fa-arrow-down';
+      }
+      return 'fas fa-sort'; // Default unsorted icon
+    },
     reset() {
       this.form = mapValues(this.form, () => null)
     },

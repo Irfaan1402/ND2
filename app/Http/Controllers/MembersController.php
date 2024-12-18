@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Meeting;
 use App\Models\MeetingHasMember;
 use App\Models\Member;
 use App\Models\Office;
@@ -19,12 +20,13 @@ class MembersController extends Controller
 {
     public function index(): Response
     {
-
         if (Auth::user() && Auth::user()->hasRole('admin')) {
+
             return Inertia::render('Members/Index', [
-                'filters' => Request::all('search', 'constituency'),
-                'members' => Auth::user()->office->members()->orderByName()
+                'filters' => Request::all('search', 'constituency', 'sort', 'direction'),
+                'members' => Auth::user()->office->members()
                     ->filter(Request::only('search', 'constituency'))
+                    ->orderBy(Request::get('sort', 'last_name'), Request::get('direction', 'asc')) // Default to name ascending
                     ->paginate(10)
                     ->withQueryString()
                     ->through(fn ($member) => [
@@ -35,14 +37,14 @@ class MembersController extends Controller
                         'deleted_at' => $member->deleted_at,
                         'email' => $member->email,
                         'constituency' => $member->constituency,
+                        'attendance' => $member->attendance,
                     ]),
             ]);
         } else {
             return Inertia::render('Errors/Unauthorized');
         }
-
-
     }
+
 
     public function create(): Response
     {
