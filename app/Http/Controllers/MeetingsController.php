@@ -105,6 +105,7 @@ class MeetingsController extends Controller
                     'office_id' => $meeting->office_id,
                     'topic' => $meeting->topic,
                     'attachment_path' => $meeting->attachment_path,
+                    'participants' => $meeting->members->count(),
                 ],
                 'offices' => Office::all(),
                 'members' => $members,
@@ -172,6 +173,7 @@ class MeetingsController extends Controller
                 ->transform(fn ($user) => [
                     'id' => $user->id,
                     'name' => $user->name,
+                    'phone' => $user->phone,
                     'email' => $user->email,
                     'locality' => $user->locality,
                 ]),

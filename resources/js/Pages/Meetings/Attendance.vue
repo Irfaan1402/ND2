@@ -68,6 +68,7 @@
     <p><b>Name</b> : {{ selectedMember.name }}</p>
     <p><b>Email</b> : {{ selectedMember.email }}</p>
     <p><b>Address</b> : {{ selectedMember.address }}</p>
+    <p><b>Phone</b> : {{ selectedMember.phone }}</p>
   </modal>
 </template>
 

@@ -24,7 +24,7 @@
     </div>
   </div>
   <h1 class="mb-8 text-3xl font-bold mt-10">
-      Participants ({{members.data.length}}) <a :href="`/attendance/${meeting.id}`"><i class="fa fa-plus-circle fa-lg me-2"></i></a>
+      Participants ({{meeting.participants}}) <a :href="`/attendance/${meeting.id}`"><i class="fa fa-plus-circle fa-lg me-2"></i></a>
   </h1>
   <div class="bg-white rounded-md shadow overflow-x-auto">
       <table class="w-full whitespace-nowrap">

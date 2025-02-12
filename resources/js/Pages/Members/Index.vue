@@ -18,8 +18,10 @@
     <div class="bg-white rounded-md shadow overflow-x-auto">
       <table class="w-full whitespace-nowrap">
         <tr class="text-left font-bold">
-          <th class="pb-4 pt-6 px-6 cursor-pointer" @click="sortBy('last_name')">
-            Name <i :class="getSortIcon('last_name')" class="ml-2"></i>
+          <th class="pb-4 pt-6 px-6 cursor-pointer" @click="sortBy('first_name')">
+            First Name <i :class="getSortIcon('first_name')" class="ml-2"></i>
+          </th>  <th class="pb-4 pt-6 px-6 cursor-pointer" @click="sortBy('last_name')">
+            Last Name <i :class="getSortIcon('last_name')" class="ml-2"></i>
           </th>
           <th class="pb-4 pt-6 px-6 cursor-pointer" @click="sortBy('email')">
             Email <i :class="getSortIcon('email')" class="ml-2"></i>
@@ -42,7 +44,13 @@
         <tr v-for="contact in members.data" :key="contact.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
           <td class="border-t">
             <Link class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/members/${contact.id}/edit`">
-              {{ contact.name }}
+              {{ contact.first_name }}
+              <icon v-if="contact.deleted_at" name="trash" class="shrink-0 ml-2 w-3 h-3 fill-gray-400" />
+            </Link>
+          </td>
+          <td class="border-t">
+            <Link class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/members/${contact.id}/edit`">
+              {{ contact.last_name }}
               <icon v-if="contact.deleted_at" name="trash" class="shrink-0 ml-2 w-3 h-3 fill-gray-400" />
             </Link>
           </td>
@@ -116,7 +124,7 @@ export default {
         search: this.filters.search,
         trashed: this.filters.trashed,
         constituency : this.filters.constituency,
-        sort: this.filters.sort || 'name',
+        sort: this.filters.sort || 'first_name',
         direction: this.filters.direction || 'asc',
       },
     }

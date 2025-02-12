@@ -22,28 +22,34 @@ class MembersController extends Controller
     {
         if (Auth::user() && Auth::user()->hasRole('admin')) {
 
+            $totalMeetings = Meeting::count(); // Get total number of meetings
+
             return Inertia::render('Members/Index', [
                 'filters' => Request::all('search', 'constituency', 'sort', 'direction'),
                 'members' => Auth::user()->office->members()
                     ->filter(Request::only('search', 'constituency'))
-                    ->orderBy(Request::get('sort', 'last_name'), Request::get('direction', 'asc')) // Default to name ascending
+                    ->orderBy(Request::get('sort', 'first_name'), Request::get('direction', 'asc'))
                     ->paginate(10)
                     ->withQueryString()
                     ->through(fn ($member) => [
                         'id' => $member->id,
-                        'name' => $member->name,
+                        'first_name' => $member->first_name,
+                        'last_name' => $member->last_name,
                         'phone' => $member->phone,
                         'address' => $member->address,
                         'deleted_at' => $member->deleted_at,
                         'email' => $member->email,
                         'constituency' => $member->constituency,
-                        'attendance' => $member->attendance,
+                        'attendance' => $totalMeetings > 0
+                            ? round(($member->meetings()->count() / $totalMeetings) * 100, 2)
+                            : 0, // Avoid division by zero
                     ]),
             ]);
         } else {
             return Inertia::render('Errors/Unauthorized');
         }
     }
+
 
 
     public function create(): Response
